@@ -2,7 +2,7 @@
 
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/home/Hero";
-import { Shield, Users, Zap, Terminal } from "lucide-react";
+import { Shield, Users, Zap, Terminal, MessageSquare, Send } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -41,35 +41,49 @@ export default function Home() {
       </section>
 
       {/* Premium Footer */}
-      <footer className="py-16 border-t border-white/5 bg-black/20">
+      <footer className="py-20 border-t border-white/5 bg-black/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-10">
-            <div className="flex flex-col items-center md:items-start gap-4">
-              <h2 className="text-2xl font-black text-white tracking-tighter">CrystalRP</h2>
+          <div className="flex flex-col md:flex-row justify-between items-start gap-16">
+            <div className="flex flex-col items-center md:items-start gap-6">
+              <h2 className="text-3xl font-black text-white tracking-tighter">CrystalRP</h2>
               <p className="text-slate-500 text-sm max-w-sm text-center md:text-right leading-loose">
                 ساخته شده با عشق برای جامعه فایوم ایران. <br />
                 کیفیت و احترام، اولویت اصلی ماست.
               </p>
             </div>
 
-            <div className="flex gap-12 text-sm">
-              <div className="flex flex-col gap-3">
-                <span className="text-white font-bold opacity-50 uppercase tracking-widest text-[10px]">لینک‌ها</span>
-                <Link href="/rules" className="text-slate-400 hover:text-white transition-colors">قوانین</Link>
-                <Link href="/store" className="text-slate-400 hover:text-white transition-colors">فروشگاه</Link>
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-20">
+              <div className="flex flex-col gap-5">
+                <span className="text-white font-bold opacity-30 uppercase tracking-[0.2em] text-[10px]">Links</span>
+                <Link href="/rules" className="text-slate-400 hover:text-white transition-colors font-medium">قوانین</Link>
+                <Link href="/store" className="text-slate-400 hover:text-white transition-colors font-medium">فروشگاه</Link>
               </div>
-              <div className="flex flex-col gap-3">
-                <span className="text-white font-bold opacity-50 uppercase tracking-widest text-[10px]">ارتباط</span>
-                <a href="#" className="text-slate-400 hover:text-white transition-colors text-right">دیسکورد</a>
-                <a href="#" className="text-slate-400 hover:text-white transition-colors text-right">تلگرام</a>
+              <div className="flex flex-col gap-6">
+                <span className="text-white font-bold opacity-30 uppercase tracking-[0.2em] text-[10px]">Community</span>
+                <div className="flex flex-col gap-3">
+                  <a
+                    href="#"
+                    className="flex items-center gap-3 bg-white/5 border border-white/5 px-6 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all text-sm font-bold"
+                  >
+                    <MessageSquare size={18} className="text-blue-400" />
+                    دیسکورد
+                  </a>
+                  <a
+                    href="#"
+                    className="flex items-center gap-3 bg-white/5 border border-white/5 px-6 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all text-sm font-bold"
+                  >
+                    <Send size={18} className="text-blue-500" />
+                    تلگرام
+                  </a>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-slate-600 text-xs">© 2026 CrystalRP. تمامی حقوق محفوظ است.</p>
+          <div className="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-slate-600 text-[10px] font-bold uppercase tracking-widest">© 2026 CrystalRP. All rights reserved.</p>
             <div className="flex items-center gap-1 text-slate-700 text-[10px] font-bold uppercase tracking-widest">
-              <span>Powered by</span>
+              <span>Handcrafted in</span>
               <span className="text-slate-500">Next.js & Tailwind</span>
             </div>
           </div>

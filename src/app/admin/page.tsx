@@ -95,8 +95,8 @@ export default function AdminPanel() {
                                         <td className="px-10 py-8 text-slate-500 text-sm font-medium">{user.email}</td>
                                         <td className="px-10 py-8 text-center">
                                             <span className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider ${user.subscription === "الماس" ? "bg-blue-600/10 text-blue-400 border border-blue-500/20" :
-                                                    user.subscription === "طلایی" ? "bg-blue-500/10 text-blue-300 border border-blue-400/20" :
-                                                        "bg-slate-500/10 text-slate-400 border border-slate-500/20"
+                                                user.subscription === "طلایی" ? "bg-blue-500/10 text-blue-300 border border-blue-400/20" :
+                                                    "bg-slate-500/10 text-slate-400 border border-slate-500/20"
                                                 }`}>
                                                 {user.subscription}
                                             </span>

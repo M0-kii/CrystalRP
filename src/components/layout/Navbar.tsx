@@ -79,7 +79,7 @@ export const Navbar = () => {
                                 className="bg-primary hover:bg-blue-600 text-white px-5 py-2 rounded-xl text-xs font-black flex items-center gap-2 transition-all shadow-lg shadow-blue-600/20"
                             >
                                 <User size={16} />
-                                ورود به سرور
+                                Login / Signup
                             </motion.button>
                         )}
                     </div>
