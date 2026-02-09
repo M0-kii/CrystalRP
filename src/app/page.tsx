@@ -2,7 +2,7 @@
 
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/home/Hero";
-import { Shield, Users, Zap, Terminal, MessageSquare, Send } from "lucide-react";
+import { Shield, Users, Terminal, MessageSquare, Send } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -22,17 +22,17 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-6">
             <FeatureCard
-              icon={<Shield size={24} className="text-blue-400" />}
+              icon={<Shield size={24} className="text-[#005eb8]" />}
               title="امنیت و پایداری"
               desc="استفاده از آنتی‌چیت اختصاصی و سرورهای قدرتمند برای تضمین تجربه روان."
             />
             <FeatureCard
-              icon={<Users size={24} className="text-blue-500" />}
+              icon={<Users size={24} className="text-[#003d82]" />}
               title="جامعه بالغ"
               desc="میزبانی از برترین پلیرهای ایران در فضایی کاملاً رول‌پلی و جدی."
             />
             <FeatureCard
-              icon={<Terminal size={24} className="text-blue-600" />}
+              icon={<Terminal size={24} className="text-[#011f4b]" />}
               title="اسکریپت‌های مدرن"
               desc="سیستم‌های منحصر به فرد که مشابه آن‌ها را در هیچ سرور دیگری نخواهید یافت."
             />
@@ -41,7 +41,10 @@ export default function Home() {
       </section>
 
       {/* Premium Footer */}
-      <footer className="py-20 border-t border-white/5 bg-black/40">
+      <footer className="py-20 border-t border-white/5 bg-black/40 relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#011f4b]/10 rounded-full blur-[120px] -z-10" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-start gap-16">
             <div className="flex flex-col items-center md:items-start gap-6">
@@ -63,16 +66,16 @@ export default function Home() {
                 <div className="flex flex-col gap-3">
                   <a
                     href="#"
-                    className="flex items-center gap-3 bg-white/5 border border-white/5 px-6 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all text-sm font-bold"
+                    className="glare-effect flex items-center gap-3 bg-white/5 border border-white/5 px-6 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all text-sm font-bold hover:border-[#011f4b]/50"
                   >
-                    <MessageSquare size={18} className="text-blue-400" />
+                    <MessageSquare size={18} className="text-[#005eb8]" />
                     دیسکورد
                   </a>
                   <a
                     href="#"
-                    className="flex items-center gap-3 bg-white/5 border border-white/5 px-6 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all text-sm font-bold"
+                    className="glare-effect flex items-center gap-3 bg-white/5 border border-white/5 px-6 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all text-sm font-bold hover:border-[#011f4b]/50"
                   >
-                    <Send size={18} className="text-blue-500" />
+                    <Send size={18} className="text-[#003d82]" />
                     تلگرام
                   </a>
                 </div>
@@ -96,9 +99,9 @@ export default function Home() {
 const FeatureCard = ({ icon, title, desc }: { icon: React.ReactNode, title: string; desc: string }) => (
   <motion.div
     whileHover={{ y: -5 }}
-    className="p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/5 hover:border-blue-500/20 hover:bg-white/[0.04] transition-all group"
+    className="glare-effect p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/5 hover:border-[#011f4b]/30 hover:bg-white/[0.04] transition-all group"
   >
-    <div className="p-4 rounded-2xl bg-white/5 w-fit mb-8 group-hover:scale-110 transition-transform duration-300">
+    <div className="p-4 rounded-2xl bg-white/5 w-fit mb-8 group-hover:scale-110 transition-transform duration-300 group-hover:bg-[#011f4b]/20">
       {icon}
     </div>
     <h3 className="text-xl font-bold mb-4 text-white">{title}</h3>

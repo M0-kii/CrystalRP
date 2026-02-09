@@ -21,7 +21,7 @@ export default function StorePage() {
         {
             name: "طلایی",
             price: "۳۰۰,۰۰۰",
-            icon: <Zap className="text-blue-400" />,
+            icon: <Zap className="text-[#005eb8]" />,
             features: [
                 "تمامی امکانات اشتراک نقره‌ای",
                 "ماشین اختصاصی لول ۱",
@@ -34,7 +34,7 @@ export default function StorePage() {
         {
             name: "الماس",
             price: "۵۰۰,۰۰۰",
-            icon: <Crown className="text-blue-600" />,
+            icon: <Crown className="text-[#011f4b]" />,
             features: [
                 "تمامی امکانات اشتراک طلایی",
                 "خانه اختصاصی (بیزنس)",
@@ -71,16 +71,16 @@ export default function StorePage() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.1 }}
                             whileHover={{ y: -10 }}
-                            className={`relative premium-border p-10 rounded-[3rem] flex flex-col ${tier.popular ? "bg-blue-600/5 border-blue-500/30" : ""
+                            className={`glare-effect relative premium-border p-10 rounded-[3rem] flex flex-col ${tier.popular ? "bg-[#011f4b]/10 border-[#005eb8]/30" : ""
                                 }`}
                         >
                             {tier.popular && (
-                                <div className="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2 bg-primary text-white text-[10px] font-black px-6 py-2 rounded-full tracking-[0.2em] shadow-xl shadow-primary/20">
+                                <div className="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2 bg-[#011f4b] text-white text-[10px] font-black px-6 py-2 rounded-full tracking-[0.2em] shadow-xl shadow-[#011f4b]/40 border border-[#005eb8]/30">
                                     POPULAR
                                 </div>
                             )}
 
-                            <div className="bg-white/5 p-5 rounded-3xl w-fit mb-8">
+                            <div className="bg-white/5 p-5 rounded-3xl w-fit mb-8 hover:bg-[#011f4b]/20 transition-colors">
                                 {tier.icon}
                             </div>
 
@@ -93,7 +93,7 @@ export default function StorePage() {
                             <ul className="space-y-5 mb-12 flex-grow">
                                 {tier.features.map((feature, fidx) => (
                                     <li key={fidx} className="flex gap-4 text-slate-400 text-sm font-medium">
-                                        <Check size={18} className="text-primary shrink-0" />
+                                        <Check size={18} className="text-[#005eb8] shrink-0" />
                                         {feature}
                                     </li>
                                 ))}
@@ -102,9 +102,9 @@ export default function StorePage() {
                             <motion.button
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                className={`w-full py-5 rounded-2xl font-black transition-all ${tier.popular
-                                        ? "bg-primary text-white shadow-2xl shadow-primary/30"
-                                        : "bg-white/5 text-white hover:bg-white/10"
+                                className={`glare-effect w-full py-5 rounded-2xl font-black transition-all ${tier.popular
+                                        ? "bg-[#011f4b] text-white shadow-2xl shadow-[#011f4b]/40 border border-[#005eb8]/30"
+                                        : "bg-white/5 text-white hover:bg-white/10 border border-white/5"
                                     }`}
                             >
                                 انتخاب اشتراک

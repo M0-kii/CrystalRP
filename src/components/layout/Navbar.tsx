@@ -29,11 +29,11 @@ export const Navbar = () => {
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-                className={`w-full max-w-5xl flex items-center justify-between h-16 px-6 rounded-2xl transition-all duration-300 ${scrolled ? "glass shadow-2xl shadow-blue-900/10" : "bg-white/5 border border-white/5"
+                className={`glare-effect w-full max-w-5xl flex items-center justify-between h-16 px-6 rounded-2xl transition-all duration-300 ${scrolled ? "glass shadow-2xl shadow-[#011f4b]/20 border-[#005eb8]/30" : "bg-white/5 border border-white/5"
                     }`}
             >
                 <div className="flex items-center gap-8">
-                    <Link href="/" className="text-xl font-black text-white tracking-tighter hover:text-primary transition-colors">
+                    <Link href="/" className="text-xl font-black text-white tracking-tighter hover:text-[#005eb8] transition-colors">
                         CrystalRP
                     </Link>
                     <div className="hidden md:block">
@@ -46,7 +46,7 @@ export const Navbar = () => {
                                 >
                                     {link.icon}
                                     {link.label}
-                                    <span className="absolute -bottom-1 right-0 w-0 h-px bg-primary transition-all group-hover:w-full" />
+                                    <span className="absolute -bottom-1 right-0 w-0 h-px bg-[#005eb8] transition-all group-hover:w-full" />
                                 </Link>
                             ))}
                         </div>
@@ -76,7 +76,7 @@ export const Navbar = () => {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => signIn("discord")}
-                                className="bg-primary hover:bg-blue-600 text-white px-5 py-2 rounded-xl text-xs font-black flex items-center gap-2 transition-all shadow-lg shadow-blue-600/20"
+                                className="glare-effect bg-[#011f4b] hover:bg-[#003d82] text-white px-5 py-2 rounded-xl text-xs font-black flex items-center gap-2 transition-all shadow-lg shadow-[#011f4b]/30 border border-[#005eb8]/20"
                             >
                                 <User size={16} />
                                 Login / Signup
@@ -102,7 +102,7 @@ export const Navbar = () => {
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
-                        className="absolute top-20 left-4 right-4 md:hidden glass p-4 rounded-[2rem] border border-white/10"
+                        className="glare-effect absolute top-20 left-4 right-4 md:hidden glass p-4 rounded-[2rem] border border-[#011f4b]/30"
                     >
                         <div className="flex flex-col gap-1">
                             {navLinks.map((link) => (
@@ -138,7 +138,7 @@ export const Navbar = () => {
                             ) : (
                                 <button
                                     onClick={() => signIn("discord")}
-                                    className="bg-primary text-white p-5 rounded-2xl font-black text-sm mt-2"
+                                    className="glare-effect bg-[#011f4b] text-white p-5 rounded-2xl font-black text-sm mt-2 border border-[#005eb8]/20"
                                 >
                                     ورود / ثبت نام
                                 </button>

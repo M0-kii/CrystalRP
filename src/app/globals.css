@@ -2,15 +2,10 @@
 
 :root {
   --background: #020617;
-  /* Deep Dark */
   --foreground: #f8fafc;
-  /* Soft White */
-  --primary: #2563eb;
-  /* Deep Blue */
-  --secondary: #1e40af;
-  /* Darker Blue */
-  --accent: #3b82f6;
-  /* Bright Blue */
+  --primary: #011f4b;
+  --secondary: #003d82;
+  --accent: #005eb8;
 }
 
 @theme inline {
@@ -35,11 +30,36 @@ body {
 }
 
 .glass {
-  @apply bg-blue-950/20 backdrop-blur-xl border border-white/10;
+  @apply bg-[#011f4b]/10 backdrop-blur-xl border border-white/10;
+  position: relative;
 }
 
 .premium-border {
   @apply border border-white/5 bg-white/5 hover:bg-white/10 transition-all duration-300;
+  position: relative;
+}
+
+.glare-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.glare-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent);
+  transition: left 0.5s;
+}
+
+.glare-effect:hover::before {
+  left: 100%;
 }
 
 .text-soft-white {
