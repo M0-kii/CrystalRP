@@ -8,7 +8,7 @@ export default function RulesPage() {
     const categories = [
         {
             title: "قوانین عمومی",
-            icon: <Shield className="text-blue-400" />,
+            icon: <Shield className="text-[#005eb8]" />,
             rules: [
                 "احترام به تمامی بازیکنان و کارکنان سرور الزامی است.",
                 "استفاده از هرگونه چیت، اسکریپت یا برنامه‌های کمکی ممنوع است.",
@@ -18,7 +18,7 @@ export default function RulesPage() {
         },
         {
             title: "قوانین رول‌پلی (RP)",
-            icon: <Scale className="text-blue-500" />,
+            icon: <Scale className="text-[#003d82]" />,
             rules: [
                 "رعایت قوانین Metagaming و Powergaming الزامی است.",
                 "Deathmatch (DM) بدون دلیل موجه ممنوع است.",
@@ -28,7 +28,7 @@ export default function RulesPage() {
         },
         {
             title: "تخلفات و مجازات‌ها",
-            icon: <AlertTriangle className="text-blue-600" />,
+            icon: <AlertTriangle className="text-[#011f4b]" />,
             rules: [
                 "تخلفات سطح ۱: اخطار شفاهی یا کیک از سرور.",
                 "تخلفات سطح ۲: بن موقت (از ۱ تا ۷ روز).",
@@ -62,10 +62,10 @@ export default function RulesPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.1 }}
-                            className="premium-border p-10 rounded-[2.5rem] flex flex-col gap-8"
+                            className="glare-effect premium-border p-10 rounded-[2.5rem] flex flex-col gap-8 hover:border-[#011f4b]/30"
                         >
                             <div className="flex items-center gap-4">
-                                <div className="p-4 bg-white/5 rounded-2xl">
+                                <div className="p-4 bg-white/5 rounded-2xl hover:bg-[#011f4b]/20 transition-colors">
                                     {cat.icon}
                                 </div>
                                 <h3 className="text-xl font-bold text-white">{cat.title}</h3>
@@ -73,7 +73,7 @@ export default function RulesPage() {
                             <ul className="space-y-5">
                                 {cat.rules.map((rule, ridx) => (
                                     <li key={ridx} className="flex gap-4 text-slate-400 text-sm leading-relaxed group">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0 group-hover:scale-150 transition-transform" />
+                                        <span className="w-1.5 h-1.5 rounded-full bg-[#005eb8] mt-2 shrink-0 group-hover:scale-150 transition-transform shadow-[0_0_8px_rgba(0,94,184,0.5)]" />
                                         {rule}
                                     </li>
                                 ))}
@@ -85,7 +85,7 @@ export default function RulesPage() {
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
-                    className="mt-20 glass p-10 rounded-[2.5rem] text-center border-dashed border-white/5"
+                    className="glare-effect mt-20 glass p-10 rounded-[2.5rem] text-center border-dashed border-[#011f4b]/20"
                 >
                     <Gavel className="mx-auto mb-6 text-slate-500" size={32} />
                     <p className="text-slate-400 text-sm max-w-2xl mx-auto leading-loose">

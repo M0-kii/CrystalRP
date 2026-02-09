@@ -6,10 +6,10 @@ import { motion } from "framer-motion";
 
 export default function AdminPanel() {
     const stats = [
-        { label: "کل کاربران", value: "۴,۵۸۰", icon: <Users size={20} />, color: "text-blue-400" },
-        { label: "اشتراک‌های فعال", value: "۱,۲۴۰", icon: <ShieldCheck size={20} />, color: "text-blue-500" },
-        { label: "درآمد ماهانه", value: "۱۸۰,۰۰۰,۰۰۰", icon: <ShoppingBag size={20} />, color: "text-blue-600" },
-        { label: "بازدید امروز", value: "+۱۲,۰۰۰", icon: <BarChart3 size={20} />, color: "text-blue-400" },
+        { label: "کل کاربران", value: "۴,۵۸۰", icon: <Users size={20} />, color: "text-[#005eb8]" },
+        { label: "اشتراک‌های فعال", value: "۱,۲۴۰", icon: <ShieldCheck size={20} />, color: "text-[#003d82]" },
+        { label: "درآمد ماهانه", value: "۱۸۰,۰۰۰,۰۰۰", icon: <ShoppingBag size={20} />, color: "text-[#011f4b]" },
+        { label: "بازدید امروز", value: "+۱۲,۰۰۰", icon: <BarChart3 size={20} />, color: "text-[#005eb8]" },
     ];
 
     const recentUsers = [
@@ -28,12 +28,12 @@ export default function AdminPanel() {
                         <h1 className="text-4xl font-black text-white tracking-tight mb-2">پنل مدیریت</h1>
                         <p className="text-slate-500 text-sm font-medium">تجزیه و تحلیل و مدیریت متمرکز سرور کریستال</p>
                     </div>
-                    <div className="relative w-full md:w-80 group">
-                        <Search className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-500 group-hover:text-primary transition-colors" size={18} />
+                    <div className="glare-effect relative w-full md:w-80 group">
+                        <Search className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-500 group-hover:text-[#005eb8] transition-colors" size={18} />
                         <input
                             type="text"
                             placeholder="جستجو در بین کاربران..."
-                            className="w-full premium-border rounded-2xl py-4 pr-14 pl-6 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50 placeholder:text-slate-600"
+                            className="w-full premium-border rounded-2xl py-4 pr-14 pl-6 text-sm focus:outline-none focus:ring-1 focus:ring-[#005eb8]/50 placeholder:text-slate-600 bg-transparent"
                         />
                     </div>
                 </div>
@@ -47,9 +47,9 @@ export default function AdminPanel() {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: i * 0.1 }}
                             whileHover={{ y: -5 }}
-                            className="premium-border p-8 rounded-[2.5rem]"
+                            className="glare-effect premium-border p-8 rounded-[2.5rem] hover:border-[#011f4b]/30"
                         >
-                            <div className={`p-4 rounded-2xl bg-white/5 w-fit mb-6 ${s.color}`}>
+                            <div className={`p-4 rounded-2xl bg-white/5 w-fit mb-6 ${s.color} hover:bg-[#011f4b]/20 transition-colors`}>
                                 {s.icon}
                             </div>
                             <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">{s.label}</p>
@@ -62,7 +62,7 @@ export default function AdminPanel() {
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="premium-border rounded-[3rem] overflow-hidden"
+                    className="glare-effect premium-border rounded-[3rem] overflow-hidden"
                 >
                     <div className="p-10 border-b border-white/5 flex items-center justify-between bg-white/[0.01]">
                         <h3 className="font-black text-xl text-white tracking-tight uppercase">مدیریت کاربران</h3>
@@ -86,24 +86,25 @@ export default function AdminPanel() {
                                     <tr key={user.id} className="hover:bg-white/[0.03] transition-colors group">
                                         <td className="px-10 py-8">
                                             <div className="flex items-center gap-4">
-                                                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-black text-xs">
+                                                <div className="w-10 h-10 rounded-xl bg-[#011f4b]/20 flex items-center justify-center text-[#005eb8] font-black text-xs border border-[#005eb8]/20">
                                                     {user.name.charAt(0)}
                                                 </div>
-                                                <span className="font-bold text-white group-hover:text-primary transition-colors">{user.name}</span>
+                                                <span className="font-bold text-white group-hover:text-[#005eb8] transition-colors">{user.name}</span>
                                             </div>
                                         </td>
                                         <td className="px-10 py-8 text-slate-500 text-sm font-medium">{user.email}</td>
                                         <td className="px-10 py-8 text-center">
-                                            <span className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider ${user.subscription === "الماس" ? "bg-blue-600/10 text-blue-400 border border-blue-500/20" :
-                                                user.subscription === "طلایی" ? "bg-blue-500/10 text-blue-300 border border-blue-400/20" :
-                                                    "bg-slate-500/10 text-slate-400 border border-slate-500/20"
+                                            <span className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider ${user.subscription === "الماس" ? "bg-[#011f4b]/20 text-[#005eb8] border border-[#005eb8]/30" :
+                                                    user.subscription === "طلایی" ? "bg-[#003d82]/20 text-[#005eb8] border border-[#003d82]/30" :
+                                                        "bg-slate-500/10 text-slate-400 border border-slate-500/20"
                                                 }`}>
                                                 {user.subscription}
                                             </span>
                                         </td>
                                         <td className="px-10 py-8 text-sm">
                                             <div className="flex items-center gap-3">
-                                                <div className={`w-2 h-2 rounded-full ${user.status === "آنلاین" ? "bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" : "bg-slate-700"}`} />
+                                                <div className={`w-2 h-2 rounded-full ${user.status === "آنلاین" ? "bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" : "bg-slate-700"
+                                                    }`} />
                                                 <span className={`font-bold text-xs ${user.status === "آنلاین" ? "text-slate-200" : "text-slate-600"}`}>{user.status}</span>
                                             </div>
                                         </td>
@@ -118,7 +119,7 @@ export default function AdminPanel() {
                         </table>
                     </div>
                     <div className="p-8 bg-white/[0.01] border-t border-white/5 text-center">
-                        <button className="text-primary text-[10px] font-black uppercase tracking-[0.2em] hover:tracking-[0.3em] transition-all">مشاهده تمامی اطلاعات کاربران</button>
+                        <button className="text-[#005eb8] text-[10px] font-black uppercase tracking-[0.2em] hover:tracking-[0.3em] transition-all">مشاهده تمامی اطلاعات کاربران</button>
                     </div>
                 </motion.div>
             </div>
