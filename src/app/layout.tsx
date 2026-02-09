@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Vazirmatn } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/providers/AuthProvider";
+import { ClickSparkle } from "@/components/effects/ClickSparkle";
 
 const vazirmatn = Vazirmatn({
   subsets: ["arabic", "latin"],
@@ -20,8 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl" className={vazirmatn.variable}>
-      <body className={`${vazirmatn.className} antialiased bg-slate-950 text-slate-50 min-h-screen`}>
+      <body className={`${vazirmatn.className} antialiased bg-black text-slate-50 min-h-screen`}>
         <AuthProvider>
+          <ClickSparkle />
           {children}
         </AuthProvider>
       </body>

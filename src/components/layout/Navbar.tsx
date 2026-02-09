@@ -29,24 +29,24 @@ export const Navbar = () => {
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-                className={`glare-effect w-full max-w-5xl flex items-center justify-between h-16 px-6 rounded-2xl transition-all duration-300 ${scrolled ? "glass shadow-2xl shadow-[#011f4b]/20 border-[#005eb8]/30" : "bg-white/5 border border-white/5"
+                className={`glare-effect w-full max-w-6xl flex items-center justify-between h-18 px-8 ios-radius-lg transition-all duration-300 ${scrolled ? "glass shadow-2xl shadow-blue-500/10 border-zinc-700/50" : "bg-zinc-900/30 border border-zinc-800/30"
                     }`}
             >
-                <div className="flex items-center gap-8">
-                    <Link href="/" className="text-xl font-black text-white tracking-tighter hover:text-[#005eb8] transition-colors">
+                <div className="flex items-center gap-10">
+                    <Link href="/" className="text-2xl font-black text-white tracking-tighter hover:text-blue-400 transition-colors">
                         CrystalRP
                     </Link>
                     <div className="hidden md:block">
-                        <div className="flex items-baseline space-x-6 space-x-reverse">
+                        <div className="flex items-baseline space-x-8 space-x-reverse">
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className="group flex items-center gap-2 text-slate-400 hover:text-white transition-all text-sm font-medium relative"
+                                    className="group flex items-center gap-2 text-slate-400 hover:text-white transition-all text-sm font-bold relative py-2"
                                 >
                                     {link.icon}
                                     {link.label}
-                                    <span className="absolute -bottom-1 right-0 w-0 h-px bg-[#005eb8] transition-all group-hover:w-full" />
+                                    <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full rounded-full" />
                                 </Link>
                             ))}
                         </div>
@@ -59,27 +59,27 @@ export const Navbar = () => {
                             <div className="flex items-center gap-4">
                                 <Link
                                     href="/dashboard"
-                                    className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm"
+                                    className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-bold"
                                 >
                                     <LayoutDashboard size={18} />
                                     پنل کاربری
                                 </Link>
                                 <button
                                     onClick={() => signOut()}
-                                    className="text-slate-500 hover:text-red-400 transition-colors"
+                                    className="p-2 text-slate-500 hover:text-red-400 transition-colors rounded-xl hover:bg-red-500/10"
                                 >
                                     <LogOut size={18} />
                                 </button>
                             </div>
                         ) : (
                             <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
+                                whileHover={{ scale: 1.03 }}
+                                whileTap={{ scale: 0.97 }}
                                 onClick={() => signIn("discord")}
-                                className="glare-effect bg-[#011f4b] hover:bg-[#003d82] text-white px-5 py-2 rounded-xl text-xs font-black flex items-center gap-2 transition-all shadow-lg shadow-[#011f4b]/30 border border-[#005eb8]/20"
+                                className="glare-effect bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 ios-radius text-sm font-black flex items-center gap-2 transition-all shadow-lg shadow-blue-600/30 border border-blue-500/20"
                             >
-                                <User size={16} />
-                                Login / Signup
+                                <User size={18} />
+                                لاگین با دیسکورد
                             </motion.button>
                         )}
                     </div>
@@ -88,7 +88,7 @@ export const Navbar = () => {
                 <div className="md:hidden">
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="text-white p-2"
+                        className="text-white p-2 hover:bg-zinc-800/50 rounded-xl transition-colors"
                     >
                         {isOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
@@ -99,37 +99,37 @@ export const Navbar = () => {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        className="glare-effect absolute top-20 left-4 right-4 md:hidden glass p-4 rounded-[2rem] border border-[#011f4b]/30"
+                        initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                        className="glare-effect absolute top-24 left-4 right-4 md:hidden glass p-6 ios-radius-xl border border-zinc-800/50"
                     >
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-2">
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className="flex items-center gap-3 text-slate-400 hover:text-white px-5 py-4 rounded-2xl hover:bg-white/5 transition-all"
+                                    className="flex items-center gap-3 text-slate-400 hover:text-white px-6 py-4 ios-radius hover:bg-zinc-800/50 transition-all font-bold"
                                     onClick={() => setIsOpen(false)}
                                 >
                                     {link.icon}
-                                    <span className="font-bold">{link.label}</span>
+                                    <span>{link.label}</span>
                                 </Link>
                             ))}
-                            <div className="h-px bg-white/5 my-2 mx-5" />
+                            <div className="h-px bg-zinc-800 my-2" />
                             {session ? (
                                 <>
                                     <Link
                                         href="/dashboard"
-                                        className="flex items-center gap-3 text-slate-400 hover:text-white px-5 py-4 rounded-2xl hover:bg-white/5"
+                                        className="flex items-center gap-3 text-slate-400 hover:text-white px-6 py-4 ios-radius hover:bg-zinc-800/50 font-bold"
                                         onClick={() => setIsOpen(false)}
                                     >
                                         <LayoutDashboard size={18} />
-                                        <span className="font-bold">پنل کاربری</span>
+                                        <span>پنل کاربری</span>
                                     </Link>
                                     <button
                                         onClick={() => signOut()}
-                                        className="flex items-center gap-3 text-red-500 px-5 py-4 transition-colors font-bold"
+                                        className="flex items-center gap-3 text-red-400 hover:text-red-300 px-6 py-4 ios-radius hover:bg-red-500/10 font-bold transition-colors"
                                     >
                                         <LogOut size={18} />
                                         خروج از حساب
@@ -138,9 +138,9 @@ export const Navbar = () => {
                             ) : (
                                 <button
                                     onClick={() => signIn("discord")}
-                                    className="glare-effect bg-[#011f4b] text-white p-5 rounded-2xl font-black text-sm mt-2 border border-[#005eb8]/20"
+                                    className="glare-effect bg-blue-600 text-white px-6 py-4 ios-radius font-black text-sm mt-2 border border-blue-500/20 hover:bg-blue-500 transition-colors"
                                 >
-                                    ورود / ثبت نام
+                                    لاگین با دیسکورد
                                 </button>
                             )}
                         </div>

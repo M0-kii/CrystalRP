@@ -2,37 +2,44 @@
 
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/home/Hero";
-import { Shield, Users, Terminal, MessageSquare, Send } from "lucide-react";
+import { Gallery } from "@/components/home/Gallery";
+import { ServerStatus } from "@/components/widgets/ServerStatus";
+import { Shield, Users, Terminal, MessageCircle, Send, Instagram, Youtube } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function Home() {
   return (
-    <main className="selection:bg-primary selection:text-white">
+    <main className="selection:bg-blue-500 selection:text-white">
       <Navbar />
       <Hero />
 
       {/* Features Section */}
       <section className="py-32 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-24">
-            <h2 className="text-4xl font-black mb-4 text-white">چرا کریستال آرپی؟</h2>
-            <p className="text-slate-500">قابلیت‌هایی که ما را از دیگران متمایز می‌کند</p>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-24"
+          >
+            <h2 className="text-5xl font-black mb-6 text-white tracking-tight">چرا کریستال آرپی؟</h2>
+            <p className="text-slate-500 max-w-2xl mx-auto">قابلیت‌هایی که ما را از دیگران متمایز می‌کند</p>
+          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8">
             <FeatureCard
-              icon={<Shield size={24} className="text-[#005eb8]" />}
+              icon={<Shield size={28} className="text-blue-400" />}
               title="امنیت و پایداری"
               desc="استفاده از آنتی‌چیت اختصاصی و سرورهای قدرتمند برای تضمین تجربه روان."
             />
             <FeatureCard
-              icon={<Users size={24} className="text-[#003d82]" />}
+              icon={<Users size={28} className="text-blue-400" />}
               title="جامعه بالغ"
               desc="میزبانی از برترین پلیرهای ایران در فضایی کاملاً رول‌پلی و جدی."
             />
             <FeatureCard
-              icon={<Terminal size={24} className="text-[#011f4b]" />}
+              icon={<Terminal size={28} className="text-blue-400" />}
               title="اسکریپت‌های مدرن"
               desc="سیستم‌های منحصر به فرد که مشابه آن‌ها را در هیچ سرور دیگری نخواهید یافت."
             />
@@ -40,54 +47,94 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Premium Footer */}
-      <footer className="py-20 border-t border-white/5 bg-black/40 relative overflow-hidden">
-        {/* Subtle background glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#011f4b]/10 rounded-full blur-[120px] -z-10" />
-
+      {/* Server Status & Gallery */}
+      <section className="py-32 bg-zinc-950/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-start gap-16">
-            <div className="flex flex-col items-center md:items-start gap-6">
-              <h2 className="text-3xl font-black text-white tracking-tighter">CrystalRP</h2>
-              <p className="text-slate-500 text-sm max-w-sm text-center md:text-right leading-loose">
-                ساخته شده با عشق برای جامعه فایوم ایران. <br />
-                کیفیت و احترام، اولویت اصلی ماست.
-              </p>
+          <div className="grid lg:grid-cols-3 gap-12 mb-32">
+            <div className="lg:col-span-2">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+              >
+                <h2 className="text-4xl font-black text-white mb-4 tracking-tight">آماده برای شروع؟</h2>
+                <p className="text-slate-400 mb-8 leading-relaxed">
+                  به جمع هزاران بازیکن فعال بپیوندید و تجربه‌ای بی‌نظیر از رول‌پلی را آغاز کنید.
+                </p>
+              </motion.div>
             </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-2 gap-20">
-              <div className="flex flex-col gap-5">
-                <span className="text-white font-bold opacity-30 uppercase tracking-[0.2em] text-[10px]">Links</span>
-                <Link href="/rules" className="text-slate-400 hover:text-white transition-colors font-medium">قوانین</Link>
-                <Link href="/store" className="text-slate-400 hover:text-white transition-colors font-medium">فروشگاه</Link>
-              </div>
-              <div className="flex flex-col gap-6">
-                <span className="text-white font-bold opacity-30 uppercase tracking-[0.2em] text-[10px]">Community</span>
-                <div className="flex flex-col gap-3">
-                  <a
-                    href="#"
-                    className="glare-effect flex items-center gap-3 bg-white/5 border border-white/5 px-6 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all text-sm font-bold hover:border-[#011f4b]/50"
-                  >
-                    <MessageSquare size={18} className="text-[#005eb8]" />
-                    دیسکورد
-                  </a>
-                  <a
-                    href="#"
-                    className="glare-effect flex items-center gap-3 bg-white/5 border border-white/5 px-6 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all text-sm font-bold hover:border-[#011f4b]/50"
-                  >
-                    <Send size={18} className="text-[#003d82]" />
-                    تلگرام
-                  </a>
-                </div>
-              </div>
+            <div className="flex items-start justify-center lg:justify-end">
+              <ServerStatus />
             </div>
           </div>
 
-          <div className="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-slate-600 text-[10px] font-bold uppercase tracking-widest">© 2026 CrystalRP. All rights reserved.</p>
-            <div className="flex items-center gap-1 text-slate-700 text-[10px] font-bold uppercase tracking-widest">
-              <span>Handcrafted in</span>
-              <span className="text-slate-500">Next.js & Tailwind</span>
+          <Gallery />
+        </div>
+      </section>
+
+      {/* Minimal Footer */}
+      <footer className="relative py-16 border-t border-zinc-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            {/* Brand */}
+            <div className="text-center md:text-right">
+              <h3 className="text-2xl font-black text-white mb-2">CrystalRP</h3>
+              <p className="text-slate-600 text-sm">بهترین تجربه رول‌پلی در ایران</p>
+            </div>
+
+            {/* Social Links */}
+            <div className="flex items-center gap-4">
+              <motion.a
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                href="https://discord.gg/crystalrp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 bg-zinc-900/50 hover:bg-blue-600/20 ios-radius border border-zinc-800 hover:border-blue-500/30 transition-all group"
+                aria-label="Discord"
+              >
+                <MessageCircle size={20} className="text-slate-400 group-hover:text-blue-400 transition-colors" />
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                href="https://t.me/crystalrp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 bg-zinc-900/50 hover:bg-blue-600/20 ios-radius border border-zinc-800 hover:border-blue-500/30 transition-all group"
+                aria-label="Telegram"
+              >
+                <Send size={20} className="text-slate-400 group-hover:text-blue-400 transition-colors" />
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                href="https://instagram.com/crystalrp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 bg-zinc-900/50 hover:bg-pink-600/20 ios-radius border border-zinc-800 hover:border-pink-500/30 transition-all group"
+                aria-label="Instagram"
+              >
+                <Instagram size={20} className="text-slate-400 group-hover:text-pink-400 transition-colors" />
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                href="https://youtube.com/@crystalrp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 bg-zinc-900/50 hover:bg-red-600/20 ios-radius border border-zinc-800 hover:border-red-500/30 transition-all group"
+                aria-label="YouTube"
+              >
+                <Youtube size={20} className="text-slate-400 group-hover:text-red-400 transition-colors" />
+              </motion.a>
+            </div>
+
+            {/* Copyright */}
+            <div className="text-center md:text-left">
+              <p className="text-slate-600 text-xs font-medium">
+                © 2024 CrystalRP. تمامی حقوق محفوظ است.
+              </p>
             </div>
           </div>
         </div>
@@ -96,15 +143,18 @@ export default function Home() {
   );
 }
 
-const FeatureCard = ({ icon, title, desc }: { icon: React.ReactNode, title: string; desc: string }) => (
+const FeatureCard = ({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) => (
   <motion.div
-    whileHover={{ y: -5 }}
-    className="glare-effect p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/5 hover:border-[#011f4b]/30 hover:bg-white/[0.04] transition-all group"
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    whileHover={{ y: -8 }}
+    className="glare-effect premium-border ios-radius-xl p-10 group hover:border-blue-500/20"
   >
-    <div className="p-4 rounded-2xl bg-white/5 w-fit mb-8 group-hover:scale-110 transition-transform duration-300 group-hover:bg-[#011f4b]/20">
+    <div className="p-5 bg-blue-600/10 ios-radius w-fit mb-8 group-hover:bg-blue-600/20 transition-colors border border-blue-500/10">
       {icon}
     </div>
-    <h3 className="text-xl font-bold mb-4 text-white">{title}</h3>
-    <p className="text-slate-500 text-sm leading-relaxed">{desc}</p>
+    <h3 className="text-xl font-black text-white mb-4 tracking-tight">{title}</h3>
+    <p className="text-slate-400 leading-relaxed text-sm">{desc}</p>
   </motion.div>
 );
