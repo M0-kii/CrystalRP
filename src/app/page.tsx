@@ -1,3 +1,5 @@
+"use client";
+
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/home/Hero";
 import { Shield, Users, Zap, Terminal } from "lucide-react";
