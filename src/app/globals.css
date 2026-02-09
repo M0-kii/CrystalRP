@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #020617;
-  --foreground: #f8fafc;
-  --primary: #011f4b;
-  --secondary: #003d82;
-  --accent: #005eb8;
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --primary: #3b82f6;
+  --secondary: #1e40af;
+  --accent: #60a5fa;
+  --muted: #27272a;
+  --border: #27272a;
 }
 
 @theme inline {
@@ -14,6 +16,8 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
 }
 
 body {
@@ -25,20 +29,34 @@ body {
 
 @layer base {
   * {
-    @apply border-white/5;
+    @apply border-zinc-800;
   }
 }
 
+/* iOS-style larger border radius */
+.ios-radius {
+  border-radius: 1.5rem;
+}
+
+.ios-radius-lg {
+  border-radius: 2rem;
+}
+
+.ios-radius-xl {
+  border-radius: 2.5rem;
+}
+
+/* Glass effect with new colors */
 .glass {
-  @apply bg-[#011f4b]/10 backdrop-blur-xl border border-white/10;
-  position: relative;
+  @apply bg-zinc-900/40 backdrop-blur-xl border border-zinc-800/50;
 }
 
+/* Premium border with new colors */
 .premium-border {
-  @apply border border-white/5 bg-white/5 hover:bg-white/10 transition-all duration-300;
-  position: relative;
+  @apply border border-zinc-800/50 bg-zinc-900/30 hover:bg-zinc-900/50 transition-all duration-300;
 }
 
+/* Glare effect */
 .glare-effect {
   position: relative;
   overflow: hidden;
@@ -53,13 +71,24 @@ body {
   height: 100%;
   background: linear-gradient(90deg,
       transparent,
-      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.08),
       transparent);
   transition: left 0.5s;
 }
 
 .glare-effect:hover::before {
   left: 100%;
+}
+
+/* Click sparkle container */
+#click-sparkles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
 }
 
 .text-soft-white {
