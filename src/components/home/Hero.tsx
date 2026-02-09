@@ -1,55 +1,71 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Play, Download, Users } from "lucide-react";
+import { Play, Download, ChevronLeft } from "lucide-react";
 
 export const Hero = () => {
     return (
-        <div className="relative pt-32 pb-20 overflow-hidden">
-            {/* Animated Background Orbs */}
-            <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse" />
-            <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-secondary/20 rounded-full blur-[120px] animate-pulse delay-700" />
+        <div className="relative pt-48 pb-32 overflow-hidden flex flex-col items-center justify-center text-center">
+            {/* Subtle Background Glows */}
+            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/10 rounded-full blur-[120px] -z-10" />
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div className="max-w-4xl mx-auto px-4 relative z-10">
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
                 >
-                    <h1 className="text-5xl md:text-7xl font-black mb-6">
-                        به جـامـعه <span className="gradient-text">CrystalRP</span> بـپیـوندید
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5 text-slate-400 text-xs font-bold mb-8 hover:bg-white/10 transition-colors cursor-default">
+                        <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                        بزرگترین سرور رول‌پلی ایران - نسخه ۴.۰
+                    </div>
+
+                    <h1 className="text-6xl md:text-8xl font-black mb-8 text-white tracking-tight leading-[1.1]">
+                        دنیای خود را در <br />
+                        <span className="text-primary italic">CrystalRP</span> بسازید
                     </h1>
-                    <p className="text-xl text-slate-400 mb-10 max-w-2xl mx-auto">
-                        تجربه‌ای متفاوت از رول‌پلی واقعی در بزرگ‌ترین سرور فایوم ایران. همین حالا ثبت نام کنید و زندگی جدید خود را آغاز کنید.
+
+                    <p className="text-lg md:text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+                        تجربه‌ای فراتر از واقعیت با اسکریپت‌های اختصاصی و جامعه‌ای صمیمی.
+                        همین حالا به جمع هزاران بازیکن ما بپیوندید.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <button className="bg-primary hover:scale-105 transition-transform text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2 shadow-xl shadow-primary/30 w-full sm:w-auto justify-center">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="bg-primary text-white px-10 py-5 rounded-2xl font-black flex items-center gap-3 shadow-2xl shadow-primary/20 hover:bg-blue-600 transition-all w-full sm:w-auto justify-center"
+                        >
                             <Play fill="white" size={20} />
-                            شروع بازی
-                        </button>
-                        <button className="glass hover:bg-white/10 transition-colors text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2 w-full sm:w-auto justify-center">
+                            شروع ماجراجویی
+                        </motion.button>
+                        <motion.button
+                            whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.08)" }}
+                            whileTap={{ scale: 0.95 }}
+                            className="px-10 py-5 rounded-2xl font-black flex items-center gap-2 text-white border border-white/10 transition-all w-full sm:w-auto justify-center"
+                        >
                             <Download size={20} />
-                            آموزش نصب
-                        </button>
+                            دریافت لانچر
+                        </motion.button>
                     </div>
+                </motion.div>
 
-                    <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
-                        <StatCard icon={<Users className="text-primary" />} title="بازیکنان" value="+12,000" />
-                        <StatCard icon={<Play className="text-secondary" />} title="وضعیت سرور" value="آنلاین" />
-                        <StatCard icon={<Download className="text-accent" />} title="آپدیت‌ها" value="روزانه" />
-                        <StatCard icon={<Users className="text-primary" />} title="دیسکورد" value="+18,000" />
-                    </div>
+                {/* Scroll Indicator */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.5, duration: 1 }}
+                    className="mt-20 flex flex-col items-center gap-2 text-slate-500"
+                >
+                    <p className="text-[10px] uppercase tracking-[0.2em] font-bold">بیشتر بدانید</p>
+                    <motion.div
+                        animate={{ y: [0, 10, 0] }}
+                        transition={{ repeat: Infinity, duration: 2 }}
+                    >
+                        <ChevronLeft className="-rotate-90" size={20} />
+                    </motion.div>
                 </motion.div>
             </div>
         </div>
     );
 };
-
-const StatCard = ({ icon, title, value }: { icon: React.ReactNode; title: string; value: string }) => (
-    <div className="glass p-6 rounded-2xl flex flex-col items-center gap-2">
-        {icon}
-        <div className="text-2xl font-black">{value}</div>
-        <div className="text-sm text-slate-400">{title}</div>
-    </div>
-);

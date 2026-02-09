@@ -1,5 +1,8 @@
+"use client";
+
 import { Navbar } from "@/components/layout/Navbar";
-import { Shield, Gavel, Scale, AlertTriangle } from "lucide-react";
+import { Shield, Scale, AlertTriangle, Gavel } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function RulesPage() {
     const categories = [
@@ -15,7 +18,7 @@ export default function RulesPage() {
         },
         {
             title: "قوانین رول‌پلی (RP)",
-            icon: <Scale className="text-purple-400" />,
+            icon: <Scale className="text-blue-500" />,
             rules: [
                 "رعایت قوانین Metagaming و Powergaming الزامی است.",
                 "Deathmatch (DM) بدون دلیل موجه ممنوع است.",
@@ -25,7 +28,7 @@ export default function RulesPage() {
         },
         {
             title: "تخلفات و مجازات‌ها",
-            icon: <AlertTriangle className="text-amber-400" />,
+            icon: <AlertTriangle className="text-blue-600" />,
             rules: [
                 "تخلفات سطح ۱: اخطار شفاهی یا کیک از سرور.",
                 "تخلفات سطح ۲: بن موقت (از ۱ تا ۷ روز).",
@@ -36,42 +39,60 @@ export default function RulesPage() {
     ];
 
     return (
-        <main className="min-h-screen pb-20">
+        <main className="min-h-screen pb-32">
             <Navbar />
 
-            <div className="pt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
-                    <h1 className="text-4xl md:text-5xl font-black mb-4 gradient-text">قوانین و مقررات</h1>
-                    <p className="text-slate-400">برای داشتن تجربه‌ای بهتر، مطالعه و رعایت قوانین الزامی است.</p>
-                </div>
+            <div className="pt-48 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center mb-24"
+                >
+                    <h1 className="text-5xl md:text-6xl font-black mb-6 text-white tracking-tight">قوانین و مقررات</h1>
+                    <p className="text-slate-500 max-w-2xl mx-auto leading-relaxed">
+                        برای حفظ نظم و صمیمیت در جامعه کریستال، مطالعه و رعایت تمامی بندهای زیر الزامی است.
+                        عدم اطلاع از قوانین به منزله عدم اجرای آن‌ها نیست.
+                    </p>
+                </motion.div>
 
-                <div className="grid md:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-3 gap-6">
                     {categories.map((cat, idx) => (
-                        <div key={idx} className="glass p-8 rounded-3xl border border-white/5 flex flex-col gap-6">
+                        <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: idx * 0.1 }}
+                            className="premium-border p-10 rounded-[2.5rem] flex flex-col gap-8"
+                        >
                             <div className="flex items-center gap-4">
-                                <div className="p-3 bg-white/5 rounded-2xl">
+                                <div className="p-4 bg-white/5 rounded-2xl">
                                     {cat.icon}
                                 </div>
-                                <h3 className="text-xl font-bold">{cat.title}</h3>
+                                <h3 className="text-xl font-bold text-white">{cat.title}</h3>
                             </div>
-                            <ul className="space-y-4">
+                            <ul className="space-y-5">
                                 {cat.rules.map((rule, ridx) => (
-                                    <li key={ridx} className="flex gap-3 text-slate-300 text-sm leading-relaxed">
-                                        <span className="text-primary mt-1">•</span>
+                                    <li key={ridx} className="flex gap-4 text-slate-400 text-sm leading-relaxed group">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0 group-hover:scale-150 transition-transform" />
                                         {rule}
                                     </li>
                                 ))}
                             </ul>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
 
-                <div className="mt-16 glass p-8 rounded-3xl text-center border-dashed border-primary/30">
-                    <Gavel className="mx-auto mb-4 text-primary" size={32} />
-                    <p className="text-slate-300">
-                        تراکنش‌های مالی و حمایت‌ها صرفاً جهت پایداری سرور بوده و تبصره‌ای برای دور زدن قوانین نیست.
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    className="mt-20 glass p-10 rounded-[2.5rem] text-center border-dashed border-white/5"
+                >
+                    <Gavel className="mx-auto mb-6 text-slate-500" size={32} />
+                    <p className="text-slate-400 text-sm max-w-2xl mx-auto leading-loose">
+                        تراکنش‌های مالی و حمایت‌ها صرفاً جهت پایداری سرور بوده و تحت هیچ شرایطی
+                        تبصره‌ای برای دور زدن قوانین یا دریافت مصونیت نخواهد بود.
                     </p>
-                </div>
+                </motion.div>
             </div>
         </main>
     );

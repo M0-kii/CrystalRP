@@ -1,5 +1,8 @@
+"use client";
+
 import { Navbar } from "@/components/layout/Navbar";
 import { Check, Star, Zap, Crown } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function StorePage() {
     const tiers = [
@@ -13,12 +16,12 @@ export default function StorePage() {
                 "۱۵٪ شارژ کیف پول هدیه",
                 "اولویت ورود معمولی"
             ],
-            color: "from-slate-400 to-slate-600"
+            popular: false
         },
         {
             name: "طلایی",
             price: "۳۰۰,۰۰۰",
-            icon: <Zap className="text-amber-400" />,
+            icon: <Zap className="text-blue-400" />,
             features: [
                 "تمامی امکانات اشتراک نقره‌ای",
                 "ماشین اختصاصی لول ۱",
@@ -26,13 +29,12 @@ export default function StorePage() {
                 "اولویت ورود بالا",
                 "دسترسی به چت وی‌آی‌پی"
             ],
-            color: "from-amber-400 to-orange-600",
-            recommended: true
+            popular: true
         },
         {
             name: "الماس",
             price: "۵۰۰,۰۰۰",
-            icon: <Crown className="text-cyan-400" />,
+            icon: <Crown className="text-blue-600" />,
             features: [
                 "تمامی امکانات اشتراک طلایی",
                 "خانه اختصاصی (بیزنس)",
@@ -40,59 +42,74 @@ export default function StorePage() {
                 "بدون صف ورود (Instant Join)",
                 "تگ اختصاصی در دیسکورد"
             ],
-            color: "from-cyan-400 to-blue-600"
+            popular: false
         }
     ];
 
     return (
-        <main className="min-h-screen pb-20">
+        <main className="min-h-screen pb-32">
             <Navbar />
 
-            <div className="pt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
-                    <h1 className="text-4xl md:text-5xl font-black mb-4 gradient-text">فروشگاه کریستال</h1>
-                    <p className="text-slate-400">با تهیه اشتراک، از سرور حمایت کنید و از مزایای ویژه بهره‌مند شوید.</p>
-                </div>
+            <div className="pt-48 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center mb-24"
+                >
+                    <h1 className="text-5xl md:text-6xl font-black mb-6 text-white tracking-tight">حمایت از سرور</h1>
+                    <p className="text-slate-500 max-w-2xl mx-auto leading-relaxed">
+                        با تهیه اشتراک ویژه، علاوه بر دریافت امکانات منحصر به فرد، ما را در مسیر
+                        بهبود و پایداری سرور یاری می‌کنید. تمامی حمایت‌ها مستقیم صرف هزینه‌های سرور می‌شود.
+                    </p>
+                </motion.div>
 
                 <div className="grid md:grid-cols-3 gap-8">
                     {tiers.map((tier, idx) => (
-                        <div
+                        <motion.div
                             key={idx}
-                            className={`relative glass p-8 rounded-[2rem] border-white/5 flex flex-col overflow-hidden ${tier.recommended ? "ring-2 ring-primary border-transparent" : ""
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: idx * 0.1 }}
+                            whileHover={{ y: -10 }}
+                            className={`relative premium-border p-10 rounded-[3rem] flex flex-col ${tier.popular ? "bg-blue-600/5 border-blue-500/30" : ""
                                 }`}
                         >
-                            {tier.recommended && (
-                                <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-4 py-1 rounded-bl-xl tracking-wider">
-                                    پیشنهادی
+                            {tier.popular && (
+                                <div className="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2 bg-primary text-white text-[10px] font-black px-6 py-2 rounded-full tracking-[0.2em] shadow-xl shadow-primary/20">
+                                    POPULAR
                                 </div>
                             )}
 
-                            <div className="bg-gradient-to-br p-4 rounded-2xl w-fit mb-6 bg-white/5">
+                            <div className="bg-white/5 p-5 rounded-3xl w-fit mb-8">
                                 {tier.icon}
                             </div>
 
-                            <h3 className="text-2xl font-black mb-2">{tier.name}</h3>
-                            <div className="flex items-baseline gap-1 mb-8">
-                                <span className="text-3xl font-black">{tier.price}</span>
-                                <span className="text-slate-400 text-sm">تومان / ماهانه</span>
+                            <h3 className="text-3xl font-black mb-2 text-white">{tier.name}</h3>
+                            <div className="flex items-baseline gap-2 mb-10">
+                                <span className="text-4xl font-black text-white">{tier.price}</span>
+                                <span className="text-slate-500 text-xs font-bold">تومان / ماهانه</span>
                             </div>
 
-                            <ul className="space-y-4 mb-10 flex-grow">
+                            <ul className="space-y-5 mb-12 flex-grow">
                                 {tier.features.map((feature, fidx) => (
-                                    <li key={fidx} className="flex gap-3 text-slate-300 text-sm">
+                                    <li key={fidx} className="flex gap-4 text-slate-400 text-sm font-medium">
                                         <Check size={18} className="text-primary shrink-0" />
                                         {feature}
                                     </li>
                                 ))}
                             </ul>
 
-                            <button className={`w-full py-4 rounded-2xl font-bold transition-all shadow-xl ${tier.recommended
-                                    ? "bg-primary text-white shadow-primary/20 hover:scale-[1.02]"
-                                    : "glass text-white hover:bg-white/10"
-                                }`}>
-                                خرید اشتراک
-                            </button>
-                        </div>
+                            <motion.button
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                className={`w-full py-5 rounded-2xl font-black transition-all ${tier.popular
+                                        ? "bg-primary text-white shadow-2xl shadow-primary/30"
+                                        : "bg-white/5 text-white hover:bg-white/10"
+                                    }`}
+                            >
+                                انتخاب اشتراک
+                            </motion.button>
+                        </motion.div>
                     ))}
                 </div>
             </div>
