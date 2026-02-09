@@ -1,14 +1,18 @@
-import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import dotenv from 'dotenv';
-import rateLimit from 'express-rate-limit';
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const dotenv = require('dotenv');
+const rateLimit = require('express-rate-limit');
 
 // Import routes
-import authRoutes from './routes/auth.js';
-import userRoutes from './routes/users.js';
-import subscriptionRoutes from './routes/subscriptions.js';
-import serverStatusRoutes from './routes/serverStatus.js';
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/users');
+const subscriptionRoutes = require('./routes/subscriptions');
+const serverStatusRoutes = require('./routes/serverStatus');
+const newsRoutes = require('./routes/news');
+const galleryRoutes = require('./routes/gallery');
+const featuresRoutes = require('./routes/features');
+const trailerRoutes = require('./routes/trailer');
 
 dotenv.config();
 
@@ -39,6 +43,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/server-status', serverStatusRoutes);
+app.use('/api/news', newsRoutes);
+app.use('/api/gallery', galleryRoutes);
+app.use('/api/features', featuresRoutes);
+app.use('/api/trailer', trailerRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

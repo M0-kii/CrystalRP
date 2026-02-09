@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useAuth } from "@/contexts/AuthContext";
 import { User, ShoppingCart, ShieldAlert, LayoutDashboard, LogOut, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const Navbar = () => {
-    const { data: session } = useSession();
+    const { user, logout, isLoading } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
@@ -37,17 +37,21 @@ export const Navbar = () => {
                         CrystalRP
                     </Link>
                     <div className="hidden md:block">
-                        <div className="flex items-baseline space-x-8 space-x-reverse">
-                            {navLinks.map((link) => (
-                                <Link
-                                    key={link.href}
-                                    href={link.href}
-                                    className="group flex items-center gap-2 text-slate-400 hover:text-white transition-all text-sm font-bold relative py-2"
-                                >
-                                    {link.icon}
-                                    {link.label}
-                                    <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full rounded-full" />
-                                </Link>
+                        <div className="flex items-baseline space-x-4 space-x-reverse">
+                            {navLinks.map((link, idx) => (
+                                <div key={link.href} className="flex items-center">
+                                    <Link
+                                        href={link.href}
+                                        className="group flex items-center gap-2 text-slate-400 hover:text-white transition-all text-sm font-bold relative py-2 px-4"
+                                    >
+                                        {link.icon}
+                                        {link.label}
+                                        <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full rounded-full" />
+                                    </Link>
+                                    {idx < navLinks.length - 1 && (
+                                        <div className="h-6 w-px bg-zinc-700/50 mx-2" />
+                                    )}
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -55,32 +59,56 @@ export const Navbar = () => {
 
                 <div className="hidden md:block">
                     <div className="flex items-center gap-4">
-                        {session ? (
-                            <div className="flex items-center gap-4">
-                                <Link
-                                    href="/dashboard"
-                                    className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-bold"
-                                >
-                                    <LayoutDashboard size={18} />
-                                    پنل کاربری
-                                </Link>
-                                <button
-                                    onClick={() => signOut()}
-                                    className="p-2 text-slate-500 hover:text-red-400 transition-colors rounded-xl hover:bg-red-500/10"
-                                >
-                                    <LogOut size={18} />
-                                </button>
-                            </div>
-                        ) : (
-                            <motion.button
-                                whileHover={{ scale: 1.03 }}
-                                whileTap={{ scale: 0.97 }}
-                                onClick={() => signIn("discord")}
-                                className="glare-effect bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 ios-radius text-sm font-black flex items-center gap-2 transition-all shadow-lg shadow-blue-600/30 border border-blue-500/20"
-                            >
-                                <User size={18} />
-                                لاگین با دیسکورد
-                            </motion.button>
+                        {!isLoading && (
+                            <>
+                                {user ? (
+                                    <div className="flex items-center gap-4">
+                                        <Link
+                                            href="/dashboard"
+                                            className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-bold"
+                                        >
+                                            <LayoutDashboard size={18} />
+                                            پنل کاربری
+                                        </Link>
+                                        {user.role === 'ADMIN' && (
+                                            <>
+                                                <div className="h-6 w-px bg-zinc-700/50" />
+                                                <Link
+                                                    href="/admin"
+                                                    className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors text-sm font-bold"
+                                                >
+                                                    <ShieldAlert size={18} />
+                                                    مدیریت
+                                                </Link>
+                                            </>
+                                        )}
+                                        <div className="h-6 w-px bg-zinc-700/50" />
+                                        <button
+                                            onClick={logout}
+                                            className="p-2 text-slate-500 hover:text-red-400 transition-colors rounded-xl hover:bg-red-500/10"
+                                        >
+                                            <LogOut size={18} />
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <motion.div className="flex items-center gap-3">
+                                        <Link
+                                            href="/login"
+                                            className="text-slate-400 hover:text-white transition-colors text-sm font-bold px-4 py-2"
+                                        >
+                                            ورود
+                                        </Link>
+                                        <div className="h-6 w-px bg-zinc-700/50" />
+                                        <Link
+                                            href="/register"
+                                            className="glare-effect bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 ios-radius text-sm font-black flex items-center gap-2 transition-all shadow-lg shadow-blue-600/30 border border-blue-500/20"
+                                        >
+                                            <User size={18} />
+                                            ثبت نام
+                                        </Link>
+                                    </motion.div>
+                                )}
+                            </>
                         )}
                     </div>
                 </div>
@@ -117,7 +145,7 @@ export const Navbar = () => {
                                 </Link>
                             ))}
                             <div className="h-px bg-zinc-800 my-2" />
-                            {session ? (
+                            {user ? (
                                 <>
                                     <Link
                                         href="/dashboard"
@@ -127,8 +155,18 @@ export const Navbar = () => {
                                         <LayoutDashboard size={18} />
                                         <span>پنل کاربری</span>
                                     </Link>
+                                    {user.role === 'ADMIN' && (
+                                        <Link
+                                            href="/admin"
+                                            className="flex items-center gap-3 text-blue-400 hover:text-blue-300 px-6 py-4 ios-radius hover:bg-blue-500/10 font-bold"
+                                            onClick={() => setIsOpen(false)}
+                                        >
+                                            <ShieldAlert size={18} />
+                                            <span>مدیریت</span>
+                                        </Link>
+                                    )}
                                     <button
-                                        onClick={() => signOut()}
+                                        onClick={logout}
                                         className="flex items-center gap-3 text-red-400 hover:text-red-300 px-6 py-4 ios-radius hover:bg-red-500/10 font-bold transition-colors"
                                     >
                                         <LogOut size={18} />
@@ -136,12 +174,22 @@ export const Navbar = () => {
                                     </button>
                                 </>
                             ) : (
-                                <button
-                                    onClick={() => signIn("discord")}
-                                    className="glare-effect bg-blue-600 text-white px-6 py-4 ios-radius font-black text-sm mt-2 border border-blue-500/20 hover:bg-blue-500 transition-colors"
-                                >
-                                    لاگین با دیسکورد
-                                </button>
+                                <>
+                                    <Link
+                                        href="/login"
+                                        className="flex items-center gap-3 text-slate-400 hover:text-white px-6 py-4 ios-radius hover:bg-zinc-800/50 font-bold"
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        ورود
+                                    </Link>
+                                    <Link
+                                        href="/register"
+                                        className="glare-effect bg-blue-600 text-white px-6 py-4 ios-radius font-black text-sm mt-2 border border-blue-500/20 hover:bg-blue-500 transition-colors"
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        ثبت نام
+                                    </Link>
+                                </>
                             )}
                         </div>
                     </motion.div>

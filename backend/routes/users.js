@@ -1,8 +1,32 @@
-import express from 'express';
-import prisma from '../prisma/client.js';
-import { authenticateToken, isAdmin } from '../middleware/auth.js';
-
+const express = require('express');
 const router = express.Router();
+const prisma = require('../prisma/client');
+const { authenticateToken, isAdmin, isModerator } = require('../middleware/auth');
+
+// Get current user
+router.get('/me', authenticateToken, async (req, res) => {
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id: req.user.userId },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                role: true,
+                createdAt: true
+            }
+        });
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.json(user);
+    } catch (error) {
+        console.error('Get current user error:', error);
+        res.status(500).json({ error: 'Failed to fetch user data' });
+    }
+});
 
 // Get all users (Admin only)
 router.get('/', authenticateToken, isAdmin, async (req, res) => {
@@ -10,14 +34,10 @@ router.get('/', authenticateToken, isAdmin, async (req, res) => {
         const users = await prisma.user.findMany({
             select: {
                 id: true,
-                name: true,
                 email: true,
+                name: true,
                 role: true,
                 createdAt: true,
-                subscriptions: {
-                    where: { active: true },
-                    select: { type: true, expiresAt: true },
-                },
             },
         });
         res.json(users);
@@ -30,19 +50,14 @@ router.get('/', authenticateToken, isAdmin, async (req, res) => {
 // Get user by ID
 router.get('/:id', authenticateToken, async (req, res) => {
     try {
-        const { id } = req.params;
-
-        // Users can only view their own profile unless they're admin
-        if (req.user.userId !== id && req.user.role !== 'ADMIN') {
-            return res.status(403).json({ error: 'Forbidden' });
-        }
-
         const user = await prisma.user.findUnique({
-            where: { id },
-            include: {
-                subscriptions: {
-                    where: { active: true },
-                },
+            where: { id: req.params.id },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                role: true,
+                createdAt: true,
             },
         });
 
@@ -50,9 +65,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        // Remove password from response
-        const { password, ...userWithoutPassword } = user;
-        res.json(userWithoutPassword);
+        res.json(user);
     } catch (error) {
         console.error('Get user error:', error);
         res.status(500).json({ error: 'Failed to fetch user' });
@@ -62,21 +75,20 @@ router.get('/:id', authenticateToken, async (req, res) => {
 // Update user
 router.patch('/:id', authenticateToken, async (req, res) => {
     try {
-        const { id } = req.params;
         const { name, email } = req.body;
 
         // Users can only update their own profile unless they're admin
-        if (req.user.userId !== id && req.user.role !== 'ADMIN') {
-            return res.status(403).json({ error: 'Forbidden' });
+        if (req.user.userId !== req.params.id && req.user.role !== 'ADMIN') {
+            return res.status(403).json({ error: 'Unauthorized' });
         }
 
         const user = await prisma.user.update({
-            where: { id },
+            where: { id: req.params.id },
             data: { name, email },
             select: {
                 id: true,
-                name: true,
                 email: true,
+                name: true,
                 role: true,
             },
         });
@@ -91,8 +103,9 @@ router.patch('/:id', authenticateToken, async (req, res) => {
 // Delete user (Admin only)
 router.delete('/:id', authenticateToken, isAdmin, async (req, res) => {
     try {
-        const { id } = req.params;
-        await prisma.user.delete({ where: { id } });
+        await prisma.user.delete({
+            where: { id: req.params.id },
+        });
         res.json({ message: 'User deleted successfully' });
     } catch (error) {
         console.error('Delete user error:', error);
@@ -100,4 +113,4 @@ router.delete('/:id', authenticateToken, isAdmin, async (req, res) => {
     }
 });
 
-export default router;
+module.exports = router;

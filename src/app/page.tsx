@@ -3,6 +3,7 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/home/Hero";
 import { Gallery } from "@/components/home/Gallery";
+import { NewsCarousel } from "@/components/home/NewsCarousel";
 import { Shield, Users, Terminal, MessageCircle, Send, Instagram, Youtube, Play } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -14,7 +15,7 @@ export default function Home() {
       <Hero />
 
       {/* Features Section */}
-      <section className="py-32 relative">
+      <section className="py-32 relative bg-zinc-950/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -45,6 +46,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* News Carousel */}
+      <NewsCarousel />
 
       {/* Trailer Section */}
       <section className="py-32 bg-zinc-950/50">
@@ -86,46 +90,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* News Section */}
-      <section className="py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl font-black text-white mb-6 tracking-tight">آخرین اخبار</h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
-              جدیدترین به‌روزرسانی‌ها و رویدادهای سرور
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <NewsCard
-              title="آپدیت جدید سیستم گنگ"
-              date="۱۵ بهمن ۱۴۰۳"
-              excerpt="سیستم گنگ با امکانات جدید و هیجان‌انگیز به‌روزرسانی شد. حالا می‌توانید قلمرو خود را گسترش دهید."
-              tag="به‌روزرسانی"
-            />
-            <NewsCard
-              title="رویداد ویژه آخر هفته"
-              date="۱۲ بهمن ۱۴۰۳"
-              excerpt="رویداد ویژه با جوایز نقدی و اشتراک رایگان برای برندگان. شنبه ساعت ۲۰ شروع می‌شود."
-              tag="رویداد"
-            />
-            <NewsCard
-              title="افزایش ظرفیت سرور"
-              date="۸ بهمن ۱۴۰۳"
-              excerpt="با توجه به استقبال شما، ظرفیت سرور به ۱۲۸ نفر افزایش یافت. تجربه‌ای روان‌تر در انتظار شماست."
-              tag="اطلاعیه"
-            />
-          </div>
-        </div>
-      </section>
-
       {/* Gallery */}
-      <section className="py-32 bg-zinc-950/50">
+      <section className="py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Gallery />
         </div>
@@ -215,33 +181,5 @@ const FeatureCard = ({ icon, title, desc }: { icon: React.ReactNode; title: stri
     </div>
     <h3 className="text-xl font-black text-white mb-4 tracking-tight">{title}</h3>
     <p className="text-slate-400 leading-relaxed text-sm">{desc}</p>
-  </motion.div>
-);
-
-const NewsCard = ({ title, date, excerpt, tag }: { title: string; date: string; excerpt: string; tag: string }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    whileHover={{ y: -8 }}
-    className="glare-effect premium-border ios-radius-xl p-8 group hover:border-blue-500/20"
-  >
-    <div className="flex items-center justify-between mb-6">
-      <span className="px-4 py-2 bg-blue-600/10 text-blue-400 text-xs font-black uppercase tracking-wider ios-radius border border-blue-500/20">
-        {tag}
-      </span>
-      <span className="text-slate-600 text-xs font-bold">{date}</span>
-    </div>
-    <h3 className="text-xl font-black text-white mb-4 tracking-tight group-hover:text-blue-400 transition-colors">
-      {title}
-    </h3>
-    <p className="text-slate-400 leading-relaxed text-sm">{excerpt}</p>
-    <motion.button
-      whileHover={{ x: 5 }}
-      className="mt-6 text-blue-400 text-sm font-bold flex items-center gap-2 group-hover:gap-3 transition-all"
-    >
-      ادامه مطلب
-      <span>←</span>
-    </motion.button>
   </motion.div>
 );

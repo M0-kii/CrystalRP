@@ -1,128 +1,169 @@
 "use client";
 
-import { Navbar } from "@/components/layout/Navbar";
-import { Users, ShoppingBag, ShieldCheck, BarChart3, Search, MoreVertical, ChevronDown } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
+import {
+    Newspaper,
+    Image as ImageIcon,
+    Star,
+    Video,
+    Users,
+    LayoutDashboard,
+    Plus,
+    Edit,
+    Trash2
+} from "lucide-react";
 
-export default function AdminPanel() {
-    const stats = [
-        { label: "کل کاربران", value: "۴,۵۸۰", icon: <Users size={20} />, color: "text-[#005eb8]" },
-        { label: "اشتراک‌های فعال", value: "۱,۲۴۰", icon: <ShieldCheck size={20} />, color: "text-[#003d82]" },
-        { label: "درآمد ماهانه", value: "۱۸۰,۰۰۰,۰۰۰", icon: <ShoppingBag size={20} />, color: "text-[#011f4b]" },
-        { label: "بازدید امروز", value: "+۱۲,۰۰۰", icon: <BarChart3 size={20} />, color: "text-[#005eb8]" },
-    ];
+export default function AdminPage() {
+    const { user, isLoading } = useAuth();
+    const router = useRouter();
+    const [stats, setStats] = useState({
+        news: 0,
+        gallery: 0,
+        features: 0,
+        users: 0
+    });
 
-    const recentUsers = [
-        { id: 1, name: "Ali_Crystal", email: "ali@example.com", subscription: "طلایی", status: "آنلاین" },
-        { id: 2, name: "Reza_RP", email: "reza@example.com", subscription: "نقره‌ای", status: "آفلاین" },
-        { id: 3, name: "Sana_Player", email: "sana@example.com", subscription: "الماس", status: "آنلاین" },
+    useEffect(() => {
+        if (!isLoading && (!user || user.role !== 'ADMIN')) {
+            router.push('/');
+        }
+    }, [user, isLoading, router]);
+
+    useEffect(() => {
+        // Fetch stats
+        const fetchStats = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const headers = { 'Authorization': `Bearer ${token}` };
+
+                const [newsRes, galleryRes, featuresRes, usersRes] = await Promise.all([
+                    fetch('http://localhost:5000/api/news', { headers }),
+                    fetch('http://localhost:5000/api/gallery', { headers }),
+                    fetch('http://localhost:5000/api/features', { headers }),
+                    fetch('http://localhost:5000/api/users', { headers })
+                ]);
+
+                const [news, gallery, features, users] = await Promise.all([
+                    newsRes.json(),
+                    galleryRes.json(),
+                    featuresRes.json(),
+                    usersRes.json()
+                ]);
+
+                setStats({
+                    news: news.length || 0,
+                    gallery: gallery.length || 0,
+                    features: features.length || 0,
+                    users: users.length || 0
+                });
+            } catch (error) {
+                console.error('Failed to fetch stats:', error);
+            }
+        };
+
+        if (user?.role === 'ADMIN') {
+            fetchStats();
+        }
+    }, [user]);
+
+    if (isLoading || !user || user.role !== 'ADMIN') {
+        return null;
+    }
+
+    const sections = [
+        {
+            title: "مدیریت اخبار",
+            description: "ایجاد، ویرایش و حذف اخبار سرور",
+            icon: <Newspaper size={32} className="text-blue-400" />,
+            href: "/admin/news",
+            count: stats.news,
+            color: "blue"
+        },
+        {
+            title: "مدیریت گالری",
+            description: "مدیریت تصاویر و اسکرین‌شات‌ها",
+            icon: <ImageIcon size={32} className="text-purple-400" />,
+            href: "/admin/gallery",
+            count: stats.gallery,
+            color: "purple"
+        },
+        {
+            title: "مدیریت ویژگی‌ها",
+            description: "ویرایش ویژگی‌های سرور",
+            icon: <Star size={32} className="text-yellow-400" />,
+            href: "/admin/features",
+            count: stats.features,
+            color: "yellow"
+        },
+        {
+            title: "مدیریت تریلر",
+            description: "به‌روزرسانی ویدیو تریلر",
+            icon: <Video size={32} className="text-red-400" />,
+            href: "/admin/trailer",
+            count: 1,
+            color: "red"
+        },
+        {
+            title: "مدیریت کاربران",
+            description: "مشاهده و مدیریت کاربران",
+            icon: <Users size={32} className="text-green-400" />,
+            href: "/admin/users",
+            count: stats.users,
+            color: "green"
+        }
     ];
 
     return (
-        <main className="min-h-screen pb-32">
-            <Navbar />
-
-            <div className="pt-48 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col md:flex-row items-center justify-between mb-16 gap-10">
+        <div className="min-h-screen bg-black">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-12">
                     <div>
-                        <h1 className="text-4xl font-black text-white tracking-tight mb-2">پنل مدیریت</h1>
-                        <p className="text-slate-500 text-sm font-medium">تجزیه و تحلیل و مدیریت متمرکز سرور کریستال</p>
+                        <h1 className="text-5xl font-black text-white mb-2 tracking-tight">پنل مدیریت</h1>
+                        <p className="text-slate-500">مدیریت محتوای سایت کریستال آرپی</p>
                     </div>
-                    <div className="glare-effect relative w-full md:w-80 group">
-                        <Search className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-500 group-hover:text-[#005eb8] transition-colors" size={18} />
-                        <input
-                            type="text"
-                            placeholder="جستجو در بین کاربران..."
-                            className="w-full premium-border rounded-2xl py-4 pr-14 pl-6 text-sm focus:outline-none focus:ring-1 focus:ring-[#005eb8]/50 placeholder:text-slate-600 bg-transparent"
-                        />
-                    </div>
+                    <Link
+                        href="/"
+                        className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-bold"
+                    >
+                        <LayoutDashboard size={18} />
+                        بازگشت به سایت
+                    </Link>
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-                    {stats.map((s, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: i * 0.1 }}
-                            whileHover={{ y: -5 }}
-                            className="glare-effect premium-border p-8 rounded-[2.5rem] hover:border-[#011f4b]/30"
-                        >
-                            <div className={`p-4 rounded-2xl bg-white/5 w-fit mb-6 ${s.color} hover:bg-[#011f4b]/20 transition-colors`}>
-                                {s.icon}
-                            </div>
-                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">{s.label}</p>
-                            <p className="text-2xl font-black text-white tracking-tight">{s.value}</p>
-                        </motion.div>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {sections.map((section, idx) => (
+                        <Link key={idx} href={section.href}>
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: idx * 0.1 }}
+                                whileHover={{ y: -8 }}
+                                className="glare-effect premium-border ios-radius-xl p-8 group cursor-pointer hover:border-blue-500/30"
+                            >
+                                <div className="flex items-start justify-between mb-6">
+                                    <div className={`p-4 bg-${section.color}-600/10 ios-radius border border-${section.color}-500/20`}>
+                                        {section.icon}
+                                    </div>
+                                    <div className="text-left">
+                                        <p className="text-4xl font-black text-white">{section.count}</p>
+                                        <p className="text-xs text-slate-600 font-bold uppercase tracking-wider">آیتم</p>
+                                    </div>
+                                </div>
+                                <h3 className="text-xl font-black text-white mb-2 tracking-tight group-hover:text-blue-400 transition-colors">
+                                    {section.title}
+                                </h3>
+                                <p className="text-slate-500 text-sm">{section.description}</p>
+                            </motion.div>
+                        </Link>
                     ))}
                 </div>
-
-                {/* User Management Table */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="glare-effect premium-border rounded-[3rem] overflow-hidden"
-                >
-                    <div className="p-10 border-b border-white/5 flex items-center justify-between bg-white/[0.01]">
-                        <h3 className="font-black text-xl text-white tracking-tight uppercase">مدیریت کاربران</h3>
-                        <button className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors text-xs font-bold uppercase tracking-widest">
-                            Latest First <ChevronDown size={16} />
-                        </button>
-                    </div>
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-right">
-                            <thead>
-                                <tr className="text-slate-600 text-[10px] font-black uppercase tracking-[0.2em] border-b border-white/5 bg-white/[0.01]">
-                                    <th className="px-10 py-6 font-medium">نام کاربری</th>
-                                    <th className="px-10 py-6 font-medium">ایمیل</th>
-                                    <th className="px-10 py-6 font-medium text-center">نوع اشتراک</th>
-                                    <th className="px-10 py-6 font-medium">وضعیت</th>
-                                    <th className="px-10 py-6 font-medium"></th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-white/5">
-                                {recentUsers.map((user) => (
-                                    <tr key={user.id} className="hover:bg-white/[0.03] transition-colors group">
-                                        <td className="px-10 py-8">
-                                            <div className="flex items-center gap-4">
-                                                <div className="w-10 h-10 rounded-xl bg-[#011f4b]/20 flex items-center justify-center text-[#005eb8] font-black text-xs border border-[#005eb8]/20">
-                                                    {user.name.charAt(0)}
-                                                </div>
-                                                <span className="font-bold text-white group-hover:text-[#005eb8] transition-colors">{user.name}</span>
-                                            </div>
-                                        </td>
-                                        <td className="px-10 py-8 text-slate-500 text-sm font-medium">{user.email}</td>
-                                        <td className="px-10 py-8 text-center">
-                                            <span className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider ${user.subscription === "الماس" ? "bg-[#011f4b]/20 text-[#005eb8] border border-[#005eb8]/30" :
-                                                    user.subscription === "طلایی" ? "bg-[#003d82]/20 text-[#005eb8] border border-[#003d82]/30" :
-                                                        "bg-slate-500/10 text-slate-400 border border-slate-500/20"
-                                                }`}>
-                                                {user.subscription}
-                                            </span>
-                                        </td>
-                                        <td className="px-10 py-8 text-sm">
-                                            <div className="flex items-center gap-3">
-                                                <div className={`w-2 h-2 rounded-full ${user.status === "آنلاین" ? "bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" : "bg-slate-700"
-                                                    }`} />
-                                                <span className={`font-bold text-xs ${user.status === "آنلاین" ? "text-slate-200" : "text-slate-600"}`}>{user.status}</span>
-                                            </div>
-                                        </td>
-                                        <td className="px-10 py-8">
-                                            <button className="p-2 text-slate-700 hover:text-white transition-colors">
-                                                <MoreVertical size={18} />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className="p-8 bg-white/[0.01] border-t border-white/5 text-center">
-                        <button className="text-[#005eb8] text-[10px] font-black uppercase tracking-[0.2em] hover:tracking-[0.3em] transition-all">مشاهده تمامی اطلاعات کاربران</button>
-                    </div>
-                </motion.div>
             </div>
-        </main>
+        </div>
     );
 }

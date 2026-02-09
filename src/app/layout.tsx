@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Vazirmatn } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "@/components/providers/AuthProvider";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { ClickSparkle } from "@/components/effects/ClickSparkle";
 
 const vazirmatn = Vazirmatn({

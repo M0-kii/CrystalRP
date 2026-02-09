@@ -50,9 +50,40 @@ model Rule {
 model News {
   id        String   @id @default(cuid())
   title     String
-  content   String
+  content   String   @db.Text
+  excerpt   String?
+  tag       String   @default("اطلاعیه")
   image     String?
-  authorId  String
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Gallery {
+  id        String   @id @default(cuid())
+  title     String
+  image     String
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Feature {
+  id        String   @id @default(cuid())
+  title     String
+  description String @db.Text
+  icon      String   // Icon name from lucide-react
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Trailer {
+  id        String   @id @default(cuid())
+  title     String
+  videoUrl  String
+  active    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
